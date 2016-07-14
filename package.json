@@ -2,7 +2,8 @@
   "name": "aws_signed",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "validate.js",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,8 +13,11 @@
     "express": "^4.14.0",
     "express-http-proxy": "^0.7.4",
     "http-proxy": "^1.14.0",
-    "request": "2.72.0"
+    "needle": "^1.0.0",
+    "request": "2.72.0",
+    "node-cmd":"1.1.1",
+    "forever":"0.15.2"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "alex maties",
+  "license": "MIT"
 }
