@@ -3,8 +3,6 @@ var proxy = httpProxy.createProxyServer();
 
 app.post("/", function(req, res) {
 
-
-
   var fs = require('fs'),
       request = require('request');
 
@@ -17,62 +15,52 @@ app.post("/", function(req, res) {
     });
   };
 
-  download('https://www.google.com/images/srpr/logo3w.png', 'google.png', function(){
+  download(req.body.url, 'File', function(){
     console.log('done');
+    console.log(File);
 
 
  var cmd=require('node-cmd');
   cmd.get(
-          'clamscan google.png',
+          'clamscan File',
           function(data){
-              console.log('the current working dir is : ',data)
+              console.log('the current working dir is : ',data);
 
+              //Default set to true
+              var verified = true;
 
-              var validated={
-                "name": "testtag555",
-                "projectId": "6"
-              }
+              //Return object
+               var validated = {
+                      "id": req.body.id,
+                      "url": req.body.url,
+                      "table": req.body.table,
+                      "folder": req.body.folder,
+                      "resourceType": req.body.resourceType,
+                      "userEPPN": req.body.userEPPN,
+                      "verified": verified,
+                      "scanLog":data.substring(0, (data.indexOf(":")+4))
+                    }
 
+                    console.log(validated);
 
-              // var validated = {
-              //        "id": req.body.id,
-              //        "url": req.body.url,
-              //        "table": req.body.table,
-              //        "folder": "Profile",
-              //        "resourceType": "ProfilePicture",
-              //        "userEPPN": req.body.userEPPN,
-              //        "verified": "garbage",
-              //        "scanLog":data.substring(0, (data.indexOf(":")+4))
-              //      }
-
-                          // proxy.web(req, res.send(validated), {
-                          //   target: 'http://localhost:8080/projects_tags/'
-                          // });
 var needle = require('needle');
 var options = {
   headers: { "Content-Type": "application/json","AJP_eppn": "fforgeadmin" }
 }
 
-needle.post('http://localhost:8080/projects_tags/', JSON.stringify(validated), options, function(err, resp) {
+//Call back to the REST server
+needle.post('http://localhost:8080/verify/', JSON.stringify(validated), options, function(err, resp) {
   // you can pass params as a string or as an object.
   console.log("guess whose back ");
   console.log(resp.body)
 });
 
-
           }
       );
-
-
-
-
   });
 
 res.send('hello world');
 });
 
-
-
 }
-
 module.exports = appRouter;
