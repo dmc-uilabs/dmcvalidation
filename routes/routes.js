@@ -17,7 +17,6 @@ app.post("/", function(req, res) {
 
   download(req.body.url, 'File', function(){
     console.log('done');
-    console.log(File);
 
 
  var cmd=require('node-cmd');
