@@ -36,6 +36,8 @@ app.post("/", function(req, res) {
                       "folder": req.body.folder,
                       "resourceType": req.body.resourceType,
                       "userEPPN": req.body.userEPPN,
+                      "urlColumn": req.body.urlColumn,
+                      "idColumn": req.body.idColumn,
                       "verified": verified,
                       "scanLog":data.substring(0, (data.indexOf(":")+4))
                     }
