@@ -10,7 +10,7 @@ app.post("/", function(req, res) {
     request.head(uri, function(err, res, body){
       console.log('content-type:', res.headers['content-type']);
       console.log('content-length:', res.headers['content-length']);
-
+      console.log(req.body);
       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
   };
@@ -21,7 +21,8 @@ app.post("/", function(req, res) {
 
  var cmd=require('node-cmd');
   cmd.get(
-          'clamscan File',
+          'ls',
+          //'clamscan File',
           function(data){
               console.log('the current working dir is : ',data);
 
@@ -53,7 +54,6 @@ var options = {
 needle.post('http://localhost:8080/verify/', JSON.stringify(validated), options, function(err, resp) {
   // you can pass params as a string or as an object.
   console.log("guess whose back ");
-  console.log(resp.body)
 });
 
           }
