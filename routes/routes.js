@@ -10,7 +10,7 @@ app.post("/", function(req, res) {
     request.head(uri, function(err, res, body){
       console.log('content-type:', res.headers['content-type']);
       console.log('content-length:', res.headers['content-length']);
-      console.log(req.body);
+
       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
   };
@@ -21,13 +21,16 @@ app.post("/", function(req, res) {
 
  var cmd=require('node-cmd');
   cmd.get(
-          'ls',
-          //'clamscan File',
+          'clamscan File',
           function(data){
               console.log('the current working dir is : ',data);
 
-              //Default set to true
-              var verified = true;
+              //Default set to false
+              var verified = false;
+              var scanResult = data.substring(0, (data.indexOf(":")+4))
+
+              if(scanResult =='File: OK')
+                verified = true;
 
               //Return object
                var validated = {
@@ -40,27 +43,29 @@ app.post("/", function(req, res) {
                       "urlColumn": req.body.urlColumn,
                       "idColumn": req.body.idColumn,
                       "verified": verified,
-                      "scanLog":data.substring(0, (data.indexOf(":")+4))
+                      "scanLog":scanResult,
+		                  "restIP":req.body.restIP
                     }
 
                     console.log(validated);
 
 var needle = require('needle');
 var options = {
-  headers: { "Content-Type": "application/json","AJP_eppn": "fforgeadmin" }
+  headers: { "Content-Type": "application/json","AJP_eppn": req.body.userEPPN }
 }
 
 //Call back to the REST server
-needle.post('http://localhost:8080/verify/', JSON.stringify(validated), options, function(err, resp) {
+needle.post("http:/\/"+validated.restIP+':8080/rest/verify/', JSON.stringify(validated), options, function(err, resp) {
   // you can pass params as a string or as an object.
   console.log("guess whose back ");
+  console.log(resp.body)
 });
 
           }
       );
   });
 
-res.send('hello world');
+res.send('validation reached');
 });
 
 }
