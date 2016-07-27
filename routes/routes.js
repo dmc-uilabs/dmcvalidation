@@ -58,7 +58,7 @@ var options = {
 needle.post("http:/\/"+validated.restIP+':8080/rest/verify/', JSON.stringify(validated), options, function(err, resp) {
   // you can pass params as a string or as an object.
   console.log("guess whose back ");
-  console.log(resp.body)
+  
 });
 
           }
