@@ -1,6 +1,10 @@
 var appRouter = function(app) {
 var proxy = httpProxy.createProxyServer();
 
+app.get('/', function (req, res) {
+  res.send('validation online')
+})
+
 app.post("/", function(req, res) {
 
   var fs = require('fs'),
@@ -58,7 +62,7 @@ var options = {
 needle.post("http:/\/"+validated.restIP+':8080/rest/verify/', JSON.stringify(validated), options, function(err, resp) {
   // you can pass params as a string or as an object.
   console.log("guess whose back ");
-  
+
 });
 
           }
