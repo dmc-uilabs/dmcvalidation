@@ -3,21 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "validate.js",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "aws-sdk": "^2.4.4",
     "body-parser": "^1.15.2",
+    "crypto-js": "3.1.8",
     "express": "^4.14.0",
     "express-http-proxy": "^0.7.4",
+    "forever": "0.15.2",
     "http-proxy": "^1.14.0",
     "needle": "^1.0.0",
-    "request": "2.72.0",
-    "node-cmd":"1.1.1",
-    "forever":"0.15.2"
+    "node-cmd": "1.1.1",
+    "request": "2.72.0"
   },
   "author": "alex maties",
-  "license": "MIT"
+  "license": "MIT",
 }
