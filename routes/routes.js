@@ -47,10 +47,14 @@ app.post("/", function(req, res) {
  var cmd=require('node-cmd');
   cmd.get(
 
-          // 'sha256 File'
-
           'clamscan File',
+
+
           function(data){
+
+              var d = new Date();
+              var milliSeconds = d.getTime();
+
               console.log('the current working dir is : ',data);
 
               //Default set to false
@@ -74,7 +78,8 @@ app.post("/", function(req, res) {
                       "verified": verified,
                       "scanLog":scanResult,
 		                  "restIP":req.body.restIP,
-                      "sha256":sha
+                      "sha256":sha,
+                      "scanDate":milliSeconds
                     }
 
                     console.log(validated);
@@ -84,7 +89,7 @@ var options = {
   headers: { "Content-Type": "application/json","AJP_eppn": req.body.userEPPN }
 }
 
-//Call back to the REST server
+// Call back to the REST server
 needle.post("http:/\/"+validated.restIP+':8080/rest/verify/', JSON.stringify(validated), options, function(err, resp) {
   // you can pass params as a string or as an object.
   console.log("guess whose back ");
