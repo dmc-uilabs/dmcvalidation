@@ -19,12 +19,36 @@ app.post("/", function(req, res) {
     });
   };
 
+  console.log("request",req);
+
   download(req.body.url, 'File', function(){
     console.log('done');
 
 
+
+  //Sha256 Calculation
+
+  var crypto = require('crypto');
+  var fs = require('fs');
+  var algo='sha256';
+  var shasum =crypto.createHash(algo);
+  var sha ='';
+  var file = 'File';
+  var s = fs.ReadStream(file);
+  s.on('data', function(sha) { shasum.update(sha); });
+  s.on('end', function() {
+    sha = shasum.digest('hex');
+    console.log(sha);
+  });
+
+
+
+
  var cmd=require('node-cmd');
   cmd.get(
+
+          // 'sha256 File'
+
           'clamscan File',
           function(data){
               console.log('the current working dir is : ',data);
@@ -35,6 +59,7 @@ app.post("/", function(req, res) {
 
               if(scanResult =='File: OK')
                 verified = true;
+
 
               //Return object
                var validated = {
@@ -48,7 +73,8 @@ app.post("/", function(req, res) {
                       "idColumn": req.body.idColumn,
                       "verified": verified,
                       "scanLog":scanResult,
-		                  "restIP":req.body.restIP
+		                  "restIP":req.body.restIP,
+                      "sha256":sha
                     }
 
                     console.log(validated);
