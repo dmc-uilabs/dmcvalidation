@@ -94,7 +94,7 @@ var appRouter = function(app) {
               "scanLog": scanResult,
               "restIP": req.body.restIP,
               "sha256": sha,
-              "scanDate": new Date().getTime().toString()
+              "scanDate": new Date().getTime()
             }
 
             console.log(validated);
@@ -136,7 +136,7 @@ var appRouter = function(app) {
             "scanLog": scanResult,
             "restIP": req.body.restIP,
             "sha256": "failed validation",
-            "scanDate": new Date().getTime().toString()
+            "scanDate": new Date().getTime()
           }
 
           console.log(validated);
