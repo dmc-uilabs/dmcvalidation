@@ -17,7 +17,6 @@ var appRouter = function(app) {
 
       console.log("got url ", uri)
       var credentials = {
-
         accessKeyId: process.env['VAL_S3_KEY'],
         secretAccessKey: process.env['VAL_S3_SECRET'],
         region: 'us-east-1'
@@ -26,7 +25,7 @@ var appRouter = function(app) {
 
       var AWS = require('aws-sdk')
       var s3 = new AWS.S3(credentials)
-
+      console.log(credentials);
 
       var params = {
         Bucket: "dmcuptemp",
@@ -94,7 +93,8 @@ var appRouter = function(app) {
               "verified": verified,
               "scanLog": scanResult,
               "restIP": req.body.restIP,
-              "sha256": sha
+              "sha256": sha,
+              "scanDate": new Date().getTime().toString()
             }
 
             console.log(validated);
@@ -135,7 +135,8 @@ var appRouter = function(app) {
             "verified": false,
             "scanLog": scanResult,
             "restIP": req.body.restIP,
-            "sha256": "failed validation"
+            "sha256": "failed validation",
+            "scanDate": new Date().getTime().toString()
           }
 
           console.log(validated);
